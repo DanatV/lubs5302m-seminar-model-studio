@@ -1,0 +1,11 @@
+# Testing — 28 October 2026
+
+Engine checks: deterministic data; non-overlapping train/test partitions covering 1,800 rows; genuine random forest vs logistic regression predictions; all-feature forest beats logistic regression by more than five percentage points; confusion counts total 540; probabilities bounded 0–1; three CV folds per model; importance for each selected feature; prevention of outcome leakage; single-feature fitting.
+
+Reference all-feature run (50 trees, depth 6): random forest test accuracy 95.185%; logistic regression 82.963%. RF validation folds: 93.112%, 93.810%, 93.079%; LR: 85.273%, 83.095%, 83.294%.
+
+Offline Chrome UI suite passed: actual drag-and-drop assignment; numeric label assignment and editable thresholds; keyboard feature assignment; fitting and matched comparison; tree selector; individual predictions; logistic coefficient view; JSON download; PDF generation; 640px reflow; stale results hidden after changing settings; clear selections; no page JavaScript errors. Results and page layout were visually inspected. A selection-order inconsistency found during testing was fixed by canonicalising the chosen feature set before fitting.
+
+A separate shallow-forest benchmark confirmed that 50 trees at depth 2 can fall below logistic regression. This is disclosed in the interface and README: the default demonstration favours RF, but no score is fabricated to force a win for an under-specified model. Remaining limits: Safari/Firefox and manual assistive-technology testing are not claimed.
+
+Revision checks: all seven variables fitted successfully as labels with the other six as features; held-out confusion totals, bounded probabilities, three CV folds, importance entries, and exclusion of the selected target verified. Enrolled works as a predictor for numeric labels. Invalid, out-of-range and one-class thresholds are rejected. Offline browser tests checked role changes, numeric target prediction, threshold-driven stale-result clearing, JSON label/threshold metadata, revised title and Brier wording, and removal of the specified logistic sentence. Updated mobile layout visually inspected. Run `node label-test.cjs` for the additional engine checks.
